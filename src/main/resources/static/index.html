@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="loginPage" class="login-container">
+    <form id="loginForm" class="login-card">
+        <h1>⚡ Electricity Manager</h1>
+        <p>Energy Consumption Management System</p>
+
+        <label>Username</label>
+        <input type="text" id="username" placeholder="Enter username" required>
+
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter password" required>
+
+        <button type="submit">Login</button>
+        <p id="loginError" class="error"></p>
+        <small>Demo Login: admin / admin123</small>
+    </form>
+</div>
+
+<div id="mainApp" class="hidden">
+
+    <header>
+        <div>
+            <h1>⚡ Electricity Management System</h1>
+            <p>Consumption and Energy Usage Analysis</p>
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </header>
+
+    <div class="layout">
+
+        <aside>
+            <button onclick="showPage('dashboard')">Dashboard</button>
+            <button onclick="showPage('consumers')">Consumer Management</button>
+            <button onclick="showPage('readings')">Meter Reading</button>
+            <button onclick="showPage('bills')">Bill Management</button>
+            <button onclick="showPage('analysis')">Energy Analysis</button>
+        </aside>
+
+        <main>
+
+            <section id="dashboard" class="page">
+                <h2>Dashboard</h2>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <p>Total Consumers</p>
+                        <h2 id="totalConsumers">0</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Total Units Consumed</p>
+                        <h2 id="totalUnits">0</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Paid Revenue</p>
+                        <h2 id="totalRevenue">₹0</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Unpaid Bills</p>
+                        <h2 id="unpaidBills">0</h2>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>Monthly Electricity Consumption</h3>
+                    <div id="monthlyDashboard"></div>
+                </div>
+            </section>
+
+            <section id="consumers" class="page hidden">
+                <h2>Consumer Management</h2>
+
+                <form id="consumerForm" class="panel form-grid">
+
+                    <input name="consumerNumber" placeholder="Consumer Number" required>
+
+                    <input name="fullName" placeholder="Consumer Name" required>
+
+                    <input name="phone" placeholder="Phone Number">
+
+                    <input name="address" placeholder="Address">
+
+                    <select name="connectionType" required>
+                        <option value="">Select Connection Type</option>
+                        <option value="Domestic">Domestic</option>
+                        <option value="Commercial">Commercial</option>
+                        <option value="Industrial">Industrial</option>
+                    </select>
+
+                    <button type="submit">Add Consumer</button>
+                </form>
+
+                <div class="panel">
+                    <h3>Consumer Details</h3>
+                    <div id="consumerTable"></div>
+                </div>
+            </section>
+
+            <section id="readings" class="page hidden">
+                <h2>Meter Reading Entry</h2>
+
+                <form id="readingForm" class="panel form-grid">
+
+                    <select name="consumerId" id="consumerSelect" required>
+                        <option value="">Select Consumer</option>
+                    </select>
+
+                    <input type="date" name="readingDate" required>
+
+                    <input type="number" name="previousReading"
+                        placeholder="Previous Reading" min="0" step="0.01" required>
+
+                    <input type="number" name="currentReading"
+                        placeholder="Current Reading" min="0" step="0.01" required>
+
+                    <button type="submit">Save Reading & Generate Bill</button>
+                </form>
+
+                <p class="note">Demo tariff: ₹5 per unit + ₹30 fixed charge.</p>
+
+                <div class="panel">
+                    <h3>Reading History</h3>
+                    <div id="readingTable"></div>
+                </div>
+            </section>
+
+            <section id="bills" class="page hidden">
+                <h2>Bill Management</h2>
+
+                <div class="panel">
+                    <h3>Electricity Bills</h3>
+                    <div id="billTable"></div>
+                </div>
+            </section>
+
+            <section id="analysis" class="page hidden">
+                <h2>Energy Usage Analysis</h2>
+
+                <div class="panel">
+                    <h3>Consumption Reports</h3>
+
+                    <p>Download the consumer electricity consumption report.</p>
+
+                    <a class="download-btn" href="/api/reports/consumption.csv">
+                        Download CSV Report
+                    </a>
+                </div>
+
+                <div class="panel">
+                    <h3>Monthly Usage</h3>
+                    <div id="monthlyAnalysis"></div>
+                </div>
+
+                <div class="panel">
+                    <h3>Python Analysis</h3>
+                    <p>
+                        Python analyzes consumer-wise electricity usage,
+                        average consumption and high-consumption consumers.
+                    </p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
